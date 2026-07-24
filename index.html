@@ -590,13 +590,32 @@ const ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 let state = {
   transactions: [],
-  categories: { expenseCustom: [], incomeCustom: [] },
-  settings: { theme: 'light', initialBalances: { cash:0, bca:0, mandiri:0, investment:0 } },
+  investments: [],
+  categories: {
+    expenseCustom: [],
+    incomeCustom: []
+  },
+  settings: {
+    theme: 'light',
+    initialBalances: {
+      cash:0,
+      bca:0,
+      mandiri:0,
+      investment:0
+    }
+  },
   activeTab: 'input',
   inputType: 'expense',
   reportSub: 'table',
+  investmentSub: 'stocks',
   editingId: null,
-  reportMonth: (()=>{ const d=new Date(); return {y:d.getFullYear(), m:d.getMonth()}; })()
+  reportMonth: (() => {
+      const d = new Date();
+      return {
+          y:d.getFullYear(),
+          m:d.getMonth()
+      };
+  })()
 };
 
 let charts = {};
