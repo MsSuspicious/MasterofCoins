@@ -850,6 +850,41 @@ document.getElementById('investment-add').addEventListener('click', ()=>{
   document.getElementById('investment-form').classList.toggle('hidden');
 });
 
+  /* ---------- INVESTMENT INPUT ---------- */
+document.getElementById('investment-save').addEventListener('click', async ()=>{
+
+  const type = document.getElementById('inv-type').value;
+  const amount = parseFormattedNumber(document.getElementById('inv-amount'));
+  const current = parseFormattedNumber(document.getElementById('inv-current'));
+  const date = document.getElementById('inv-date').value || todayStr();
+  const notes = document.getElementById('inv-notes').value.trim();
+
+  if(!amount || amount <= 0){
+    showToast('Enter investment amount first');
+    return;
+  }
+
+  const investment = {
+    id: uid(),
+    type,
+    amount,
+    current,
+    gain: current - amount,
+    date,
+    notes,
+    createdAt: Date.now()
+  };
+
+  state.investments.push(investment);
+
+  await storageSet('investments', state.investments);
+
+  showToast('Investment saved');
+
+  renderInvestment();
+
+});
+  
 /* ---------- INPUT TAB ---------- */
 document.getElementById('type-segmented').addEventListener('click', (e)=>{
   const btn = e.target.closest('button'); if(!btn) return;
