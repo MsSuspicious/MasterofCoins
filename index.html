@@ -478,19 +478,37 @@
     </div>
   </div>
 </section>
-    <!-- SETTINGS VIEW -->
-    <section class="view" id="view-settings">
-      <div class="settings-grid">
-      <div>
-      <h2 class="section-title">Account balances</h2>
-      <div class="card">
-        <div class="field" style="margin-top:0;"><label>Cash</label><input type="text" inputmode="numeric" id="s-cash"></div>
-        <div class="field"><label>BCA</label><input type="text" inputmode="numeric" id="s-bca"></div>
-        <div class="field"><label>Mandiri</label><input type="text" inputmode="numeric" id="s-mandiri"></div>
-        <div class="field"><label>Investment</label><input type="text" inputmode="numeric" id="s-investment"></div>
-        <div class="hint">Changing these overrides your calculated balances directly — use this for the initial setup or to correct a mistake.</div>
-        <div class="save-row"><button class="btn btn-ghost" id="s-save-balances">Save balances</button></div>
-      </div>
+  <!-- SETTINGS VIEW -->
+<section class="view" id="view-settings">
+  <div class="settings-grid">
+  <div>
+  <h2 class="section-title">Account balances</h2>
+  <div class="card">
+    <div class="field" style="margin-top:0;">
+      <label>Cash</label>
+      <input type="text" inputmode="numeric" id="s-cash">
+    </div>
+
+    <div class="field">
+      <label>BCA</label>
+      <input type="text" inputmode="numeric" id="s-bca">
+    </div>
+
+    <div class="field">
+      <label>Mandiri</label>
+      <input type="text" inputmode="numeric" id="s-mandiri">
+    </div>
+
+    <div class="hint">
+      Changing these overrides your calculated balances directly — use this for the initial setup or to correct a mistake.
+    </div>
+
+    <div class="save-row">
+      <button class="btn btn-ghost" id="s-save-balances">
+        Save balances
+      </button>
+    </div>
+  </div>
 
       <h2 class="section-title">Appearance</h2>
       <div class="card">
@@ -640,7 +658,7 @@ function parseFormattedNumber(el){
   const raw = el.value.replace(/[^\d]/g,'');
   return raw ? parseInt(raw,10) : 0;
 }
-['f-amount','s-cash','s-bca','s-mandiri','s-investment'].forEach(id=>{
+['f-amount','s-cash','s-bca','s-mandiri'].forEach(id=>{
   attachThousandFormatting(document.getElementById(id));
 });
 
@@ -1161,7 +1179,6 @@ function renderSettings(){
   document.getElementById('s-cash').value = toDisplayNumber(b.cash);
   document.getElementById('s-bca').value = toDisplayNumber(b.bca);
   document.getElementById('s-mandiri').value = toDisplayNumber(b.mandiri);
-  document.getElementById('s-investment').value = toDisplayNumber(b.investment);
 
   document.getElementById('chips-expense').innerHTML =
     DEFAULT_EXPENSE.map(c=>`<span class="chip default">${c}</span>`).join('') +
@@ -1182,7 +1199,6 @@ document.getElementById('s-save-balances').addEventListener('click', async ()=>{
     cash: parseFormattedNumber(document.getElementById('s-cash')),
     bca: parseFormattedNumber(document.getElementById('s-bca')),
     mandiri: parseFormattedNumber(document.getElementById('s-mandiri')),
-    investment: parseFormattedNumber(document.getElementById('s-investment')),
   };
   await storageSet('settings', state.settings);
   showToast('Balances saved');
