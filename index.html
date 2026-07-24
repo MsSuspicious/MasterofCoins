@@ -396,9 +396,9 @@
 <!-- INVESTMENT VIEW -->
 <section class="view" id="view-investment">
 
-  <button class="btn btn-primary" id="investment-add">
-    + Add Investment
-  </button>
+ <button class="btn btn-primary" id="investment-add">
+  + Update Valuation
+</button>
 <div class="card hidden" id="investment-form">
 
   <h3 style="margin-bottom:16px;">
@@ -867,12 +867,12 @@ document.getElementById('investment-add').addEventListener('click', ()=>{
   document.getElementById('investment-form').classList.toggle('hidden');
   updateInvestmentForm();
 });
-
+document.getElementById('investment-cancel').addEventListener('click', ()=>{
+  document.getElementById('investment-form').classList.add('hidden');
+});
 document.getElementById('inv-type').addEventListener('change', ()=>{
   updateInvestmentForm();
 });
-
-
 document.getElementById('inv-type').addEventListener('change', ()=>{
   updateInvestmentForm();
 });
@@ -891,16 +891,17 @@ document.getElementById('investment-save').addEventListener('click', async ()=>{
     return;
   }
 
-  const investment = {
-    id: uid(),
-    type,
-    amount,
-    current,
-    gain: current - amount,
-    date,
-    notes,
-    createdAt: Date.now()
-  };
+ const investment = {
+  id: uid(),
+  type,
+  action: "Update Valuation",
+  amount,
+  current,
+  gain: current - amount,
+  date,
+  notes,
+  createdAt: Date.now()
+};
 
   state.investments.push(investment);
 
