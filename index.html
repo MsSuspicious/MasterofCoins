@@ -892,8 +892,27 @@ document.getElementById('investment-save').addEventListener('click', async ()=>{
   createdAt: Date.now()
 };
 
+if(window.editingInvestmentId){
+
+  const index = state.investments.findIndex(
+    inv => inv.id === window.editingInvestmentId
+  );
+
+  if(index !== -1){
+    state.investments[index] = {
+      ...state.investments[index],
+      ...investment,
+      id: window.editingInvestmentId
+    };
+  }
+
+  window.editingInvestmentId = null;
+
+} else {
+
   state.investments.push(investment);
 
+}
   await storageSet('investments', state.investments);
 
   showToast('Investment saved');
@@ -901,7 +920,32 @@ document.getElementById('investment-save').addEventListener('click', async ()=>{
   renderInvestment();
 
 });
-  
+  /* ---------- INVESTMENT LEDGER ACTIONS ---------- */
+document.getElementById('investment-body').addEventListener('click', async (e)=>{
+
+  const editId = e.target.dataset.editInvestment;
+  const deleteId = e.target.dataset.deleteInvestment;
+
+  if(editId){
+    editInvestment(editId);
+  }
+
+  if(deleteId){
+    const ok = await confirmDialog('Delete this investment record?');
+    if(!ok) return;
+
+    state.investments = state.investments.filter(
+      inv => inv.id !== deleteId
+    );
+
+    await storageSet('investments', state.investments);
+
+    renderInvestment();
+
+    showToast('Investment deleted');
+  }
+
+});
 /* ---------- INPUT TAB ---------- */
 document.getElementById('type-segmented').addEventListener('click', (e)=>{
   const btn = e.target.closest('button'); if(!btn) return;
@@ -1163,7 +1207,28 @@ function renderCharts(monthTx){
     options:{ plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{family:'Manrope', size:11} } } }, maintainAspectRatio:false }
   });
 }
+function editInvestment(id){
 
+  const inv = state.investments.find(
+    item => item.id === id
+  );
+
+  if(!inv) return;
+
+  document.getElementById('investment-form')
+    .classList.remove('hidden');
+
+  document.getElementById('inv-type').value = inv.type;
+  document.getElementById('inv-current').value =
+    inv.current.toLocaleString('id-ID');
+
+  document.getElementById('inv-date').value = inv.date;
+  document.getElementById('inv-notes').value = inv.notes || '';
+
+  updateInvestmentForm();
+
+  window.editingInvestmentId = id;
+}
 function renderTrends(){
   const {y,m} = state.reportMonth;
   const labels=[], incomeData=[], expenseData=[];
