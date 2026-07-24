@@ -569,66 +569,7 @@
     </div>
   </div>
 </div>
-<div class="modal-overlay" id="investment-modal">
-  <div class="modal-box" style="max-width:460px;">
-    <h3 style="margin-top:0;margin-bottom:18px;">New Investment</h3>
-    <div class="field">
-      <label>Investment Type</label>
-      <select id="i-type">
-        <option value="stocks">Stocks</option>
-        <option value="reksadana">Reksadana</option>
-        <option value="crypto">Crypto</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Action</label>
-      <select id="i-action">
-        <option value="deposit">Deposit</option>
-        <option value="withdraw">Withdraw</option>
-        <option value="update">Update Value</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Amount Invested (IDR)</label>
-      <input
-        type="text"
-        inputmode="numeric"
-        id="i-amount"
-        placeholder="0">
-    </div>
-    <div class="field">
-      <label>Current Value (IDR)</label>
-      <input
-        type="text"
-        inputmode="numeric"
-        id="i-current"
-        placeholder="0">
-    </div>
-    <div class="field">
-      <label>Date</label>
-      <input type="date" id="i-date">
-    </div>
-    <div class="field">
-      <label>Notes</label>
-      <input
-        type="text"
-        id="i-notes"
-        placeholder="Optional">
-    </div>
-    <div class="modal-actions">
-      <button
-        class="m-cancel"
-        id="investment-cancel">
-        Cancel
-      </button>
-      <button
-        class="m-confirm"
-        id="investment-save">
-        Save
-      </button>
-    </div>
-  </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /*
@@ -649,32 +590,13 @@ const ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 
 let state = {
   transactions: [],
-  investments: [],
-  categories: {
-    expenseCustom: [],
-    incomeCustom: []
-  },
-  settings: {
-    theme: 'light',
-    initialBalances: {
-      cash:0,
-      bca:0,
-      mandiri:0,
-      investment:0
-    }
-  },
+  categories: { expenseCustom: [], incomeCustom: [] },
+  settings: { theme: 'light', initialBalances: { cash:0, bca:0, mandiri:0, investment:0 } },
   activeTab: 'input',
   inputType: 'expense',
   reportSub: 'table',
-  investmentSub: 'stocks',
   editingId: null,
-  reportMonth: (() => {
-      const d = new Date();
-      return {
-          y:d.getFullYear(),
-          m:d.getMonth()
-      };
-  })()
+  reportMonth: (()=>{ const d=new Date(); return {y:d.getFullYear(), m:d.getMonth()}; })()
 };
 
 let charts = {};
@@ -764,7 +686,6 @@ async function storageSet(key, value){
 
 async function loadAll(){
   state.transactions = await storageGet('transactions', []);
-  state.investments = await storageGet('investments', []);
   state.categories = await storageGet('categories', { expenseCustom: [], incomeCustom: [] });
   state.settings = await storageGet('settings', { theme:'light', initialBalances:{cash:0,bca:0,mandiri:0,investment:0} });
   applyTheme();
@@ -890,26 +811,9 @@ document.getElementById('f-submit').addEventListener('click', async ()=>{
   }
 
   await storageSet('transactions', state.transactions);
-  await storageSet('investments', state.investments);
   resetInputForm();
   renderRecentList();
   if(state.activeTab==='report') renderReport();
-});
-  const investmentModal = document.getElementById('investment-modal');
-
-document.getElementById('investment-add').addEventListener('click', () => {
-  document.getElementById('i-date').value = todayStr();
-  investmentModal.classList.add('show');
-});
-
-document.getElementById('investment-cancel').addEventListener('click', () => {
-  investmentModal.classList.remove('show');
-});
-
-investmentModal.addEventListener('click', (e) => {
-  if (e.target === investmentModal) {
-    investmentModal.classList.remove('show');
-  }
 });
 
 function startEdit(id){
