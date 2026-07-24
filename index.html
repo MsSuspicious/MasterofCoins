@@ -414,11 +414,10 @@
     </select>
   </div>
 
-  <div class="field">
-    <label>Invested Amount (IDR)</label>
+<div class="field" id="inv-amount-wrap">
+    <label>Initial Investment (IDR)</label>
     <input type="text" inputmode="numeric" id="inv-amount" placeholder="0">
-  </div>
-
+</div>
   <div class="field">
     <label>Current Value (IDR)</label>
     <input type="text" inputmode="numeric" id="inv-current" placeholder="0">
@@ -735,6 +734,18 @@ function parseFormattedNumber(el){
   const raw = el.value.replace(/[^\d]/g,'');
   return raw ? parseInt(raw,10) : 0;
 }
+  function updateInvestmentForm(){
+  const type = document.getElementById('inv-type').value;
+  const existing = getLatestInvestment(type);
+
+  const wrap = document.getElementById('inv-amount-wrap');
+
+  if(existing){
+    wrap.classList.add('hidden');
+  } else {
+    wrap.classList.remove('hidden');
+  }
+}
 [
   'f-amount',
   's-cash',
@@ -854,6 +865,16 @@ document.querySelectorAll('.tabbar button').forEach(btn=>{
 /* ---------- INVESTMENT TAB ---------- */
 document.getElementById('investment-add').addEventListener('click', ()=>{
   document.getElementById('investment-form').classList.toggle('hidden');
+  updateInvestmentForm();
+});
+
+document.getElementById('inv-type').addEventListener('change', ()=>{
+  updateInvestmentForm();
+});
+
+
+document.getElementById('inv-type').addEventListener('change', ()=>{
+  updateInvestmentForm();
 });
 
   /* ---------- INVESTMENT INPUT ---------- */
