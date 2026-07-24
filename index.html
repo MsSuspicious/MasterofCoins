@@ -393,7 +393,70 @@
         </div>
       </div>
     </section>
-
+<!-- INVESTMENT VIEW -->
+<section class="view" id="view-investment">
+  <div class="hero">
+    <div class="coins">
+      <span class="c"></span>
+      <span class="c c2"></span>
+      <span class="c c3"></span>
+    </div>
+    <label>Total Portfolio</label>
+    <div class="amt" id="portfolio-total">Rp0</div>
+  </div>
+  <div class="accounts-grid">
+    <div class="account-card">
+      <div class="account-name">Stocks</div>
+      <div class="account-balance" id="stocks-total">Rp0</div>
+      <div class="hint">Current value</div>
+    </div>
+    <div class="account-card">
+      <div class="account-name">Reksadana</div>
+      <div class="account-balance" id="reksadana-total">Rp0</div>
+      <div class="hint">Current value</div>
+    </div>
+    <div class="account-card">
+      <div class="account-name">Crypto</div>
+      <div class="account-balance" id="crypto-total">Rp0</div>
+      <div class="hint">Current value</div>
+    </div>
+  </div>
+  <div class="subtabs">
+    <button class="active" data-investment="stocks">
+      Stocks
+    </button>
+    <button data-investment="reksadana">
+      Reksadana
+    </button>
+    <button data-investment="crypto">
+      Crypto
+    </button>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Action</th>
+          <th>Invested</th>
+          <th>Current Value</th>
+          <th>Gain / Loss</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="investment-body">
+          <tr>
+            <td colspan="7" style="text-align:center;padding:40px;color:var(--muted);">
+              No investment history yet.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
     <!-- SETTINGS VIEW -->
     <section class="view" id="view-settings">
       <div class="settings-grid">
