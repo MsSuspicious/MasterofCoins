@@ -747,6 +747,12 @@ function parseFormattedNumber(el){
   if(el) attachThousandFormatting(el);
 });
 
+function getLatestInvestment(type){
+  return (state.investments || [])
+    .filter(inv => inv.type === type)
+    .sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+}
+  
 function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
