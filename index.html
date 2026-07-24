@@ -705,6 +705,7 @@ async function storageSet(key, value){
 
 async function loadAll(){
   state.transactions = await storageGet('transactions', []);
+  state.investments = await storageGet('investments', []);
   state.categories = await storageGet('categories', { expenseCustom: [], incomeCustom: [] });
   state.settings = await storageGet('settings', { theme:'light', initialBalances:{cash:0,bca:0,mandiri:0,investment:0} });
   applyTheme();
@@ -830,6 +831,7 @@ document.getElementById('f-submit').addEventListener('click', async ()=>{
   }
 
   await storageSet('transactions', state.transactions);
+  await storageSet('investments', state.investments);
   resetInputForm();
   renderRecentList();
   if(state.activeTab==='report') renderReport();
