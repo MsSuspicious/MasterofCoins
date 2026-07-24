@@ -519,9 +519,6 @@
   </button>
 
 </div>
-<button class="btn btn-primary" id="investment-add">
-  + Add Investment
-</button>
 <div class="subtabs">
   <button class="active" data-investment="stocks">
     Stocks
@@ -738,8 +735,16 @@ function parseFormattedNumber(el){
   const raw = el.value.replace(/[^\d]/g,'');
   return raw ? parseInt(raw,10) : 0;
 }
-['f-amount','s-cash','s-bca','s-mandiri'].forEach(id=>{
-  attachThousandFormatting(document.getElementById(id));
+[
+  'f-amount',
+  's-cash',
+  's-bca',
+  's-mandiri',
+  'inv-amount',
+  'inv-current'
+].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) attachThousandFormatting(el);
 });
 
 function showToast(msg){
