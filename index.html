@@ -794,6 +794,11 @@ document.querySelectorAll('.tabbar button').forEach(btn=>{
     if(state.activeTab==='report') renderReport();
   });
 });
+  
+/* ---------- INVESTMENT TAB ---------- */
+document.getElementById('investment-add').addEventListener('click', ()=>{
+  document.getElementById('investment-form').classList.remove('hidden');
+});
 
 /* ---------- INPUT TAB ---------- */
 document.getElementById('type-segmented').addEventListener('click', (e)=>{
