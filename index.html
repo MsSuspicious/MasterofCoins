@@ -442,10 +442,45 @@
     </div>
   </div>
 </div>
-  <div class="subtabs">
-    <button class="active" data-investment="stocks">
-      Stocks
-    </button>
+
+<div class="card hidden" id="investment-form">
+
+  <h3>Add Investment</h3>
+
+  <div class="field">
+    <label>Category</label>
+    <select id="i-category">
+      <option value="stocks">Stocks</option>
+      <option value="reksadana">Reksadana</option>
+      <option value="crypto">Crypto</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Invested Amount</label>
+    <input type="text" inputmode="numeric" id="i-invested" placeholder="0">
+  </div>
+
+  <div class="field">
+    <label>Current Value</label>
+    <input type="text" inputmode="numeric" id="i-current">
+  </div>
+
+  <div class="field">
+    <label>Notes</label>
+    <input type="text" id="i-notes" placeholder="Example: BBCA stock">
+  </div>
+
+  <button class="btn btn-primary" id="investment-save">
+    Save Investment
+  </button>
+
+</div>
+
+<div class="subtabs">
+  <button class="active" data-investment="stocks">
+    Stocks
+  </button>
     <button data-investment="reksadana">
       Reksadana
     </button>
