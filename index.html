@@ -1317,6 +1317,88 @@ function renderSettings(){
   });
 }
 
+  function renderInvestment(){
+
+  const investments = state.investments || [];
+
+  let totals = {
+    stocks: {value:0, gain:0},
+    reksadana: {value:0, gain:0},
+    crypto: {value:0, gain:0}
+  };
+
+  investments.forEach(inv=>{
+    if(totals[inv.type]){
+      totals[inv.type].value += inv.current;
+      totals[inv.type].gain += inv.gain;
+    }
+  });
+
+
+  const totalPortfolio =
+    totals.stocks.value +
+    totals.reksadana.value +
+    totals.crypto.value;
+
+
+  document.getElementById('portfolio-total').textContent =
+    'Rp' + totalPortfolio.toLocaleString('id-ID');
+
+  document.getElementById('stocks-total').textContent =
+    'Rp' + totals.stocks.value.toLocaleString('id-ID');
+
+  document.getElementById('reksadana-total').textContent =
+    'Rp' + totals.reksadana.value.toLocaleString('id-ID');
+
+  document.getElementById('crypto-total').textContent =
+    'Rp' + totals.crypto.value.toLocaleString('id-ID');
+
+
+  document.getElementById('stocks-gain').textContent =
+    'Rp' + totals.stocks.gain.toLocaleString('id-ID');
+
+  document.getElementById('reksadana-gain').textContent =
+    'Rp' + totals.reksadana.gain.toLocaleString('id-ID');
+
+  document.getElementById('crypto-gain').textContent =
+    'Rp' + totals.crypto.gain.toLocaleString('id-ID');
+
+
+  document.getElementById('portfolio-gain').textContent =
+    'Rp' + (
+      totals.stocks.gain +
+      totals.reksadana.gain +
+      totals.crypto.gain
+    ).toLocaleString('id-ID');
+
+
+  const body = document.getElementById('investment-body');
+
+  if(!investments.length){
+    body.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;padding:40px;color:var(--muted);">
+          No investment history yet.
+        </td>
+      </tr>`;
+    return;
+  }
+
+
+  body.innerHTML = investments.map(inv=>`
+    <tr>
+      <td>${inv.date}</td>
+      <td>${inv.type}</td>
+      <td>Rp${inv.amount.toLocaleString('id-ID')}</td>
+      <td>Rp${inv.current.toLocaleString('id-ID')}</td>
+      <td>Rp${inv.gain.toLocaleString('id-ID')}</td>
+      <td>${inv.notes || '-'}</td>
+      <td>-</td>
+    </tr>
+  `).join('');
+
+}
+  
 document.getElementById('s-save-balances').addEventListener('click', async ()=>{
   const ok = await confirmDialog('This will manually override your Cash, BCA, Mandiri, and Investment balances, on top of whatever your transactions already calculate. Continue?');
   if(!ok) return;
