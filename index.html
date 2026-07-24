@@ -399,7 +399,50 @@
   <button class="btn btn-primary" id="investment-add">
     + Add Investment
   </button>
+<div class="card hidden" id="investment-form">
 
+  <h3 style="margin-bottom:16px;">
+    Add Investment
+  </h3>
+
+  <div class="field">
+    <label>Type</label>
+    <select id="inv-type">
+      <option value="stocks">Stocks</option>
+      <option value="reksadana">Reksadana</option>
+      <option value="crypto">Crypto</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Invested Amount (IDR)</label>
+    <input type="text" inputmode="numeric" id="inv-amount" placeholder="0">
+  </div>
+
+  <div class="field">
+    <label>Current Value (IDR)</label>
+    <input type="text" inputmode="numeric" id="inv-current" placeholder="0">
+  </div>
+
+  <div class="field">
+    <label>Date</label>
+    <input type="date" id="inv-date">
+  </div>
+
+  <div class="field">
+    <label>Notes</label>
+    <input type="text" id="inv-notes" placeholder="Optional">
+  </div>
+
+  <button class="btn btn-primary" id="investment-save">
+    Save Investment
+  </button>
+
+  <button class="btn btn-ghost" id="investment-cancel">
+    Cancel
+  </button>
+
+</div>
   <div class="hero">
     <div class="coins">
       <span class="c"></span>
@@ -799,7 +842,7 @@ document.querySelectorAll('.tabbar button').forEach(btn=>{
   
 /* ---------- INVESTMENT TAB ---------- */
 document.getElementById('investment-add').addEventListener('click', ()=>{
-  document.getElementById('investment-form').classList.remove('hidden');
+  document.getElementById('investment-form').classList.toggle('hidden');
 });
 
 /* ---------- INPUT TAB ---------- */
