@@ -1417,7 +1417,14 @@ investments.forEach(inv=>{
       <td>Rp${inv.current.toLocaleString('id-ID')}</td>
       <td>Rp${inv.gain.toLocaleString('id-ID')}</td>
       <td>${inv.notes || '-'}</td>
-      <td>-</td>
+<td>
+  <button class="btn btn-ghost btn-small" data-edit-investment="${inv.id}">
+    Edit
+  </button>
+  <button class="btn btn-danger btn-small" data-delete-investment="${inv.id}">
+    Delete
+  </button>
+</td>
     </tr>
   `).join('');
 
