@@ -1327,12 +1327,19 @@ function renderSettings(){
     crypto: {value:0, gain:0}
   };
 
-  investments.forEach(inv=>{
-    if(totals[inv.type]){
-      totals[inv.type].value += inv.current;
-      totals[inv.type].gain += inv.gain;
+investments.forEach(inv=>{
+  if(totals[inv.type]){
+    const currentDate = totals[inv.type].date || 0;
+
+    if(new Date(inv.date).getTime() >= currentDate){
+      totals[inv.type] = {
+        value: inv.current,
+        gain: inv.gain,
+        date: new Date(inv.date).getTime()
+      };
     }
-  });
+  }
+});
 
 
   const totalPortfolio =
